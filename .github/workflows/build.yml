@@ -1,14 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Build
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,14 +19,20 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-    # Runs a set of commands using the runners shell
-    - name: Project build
-      run: |
-        sudo apt update && sudo apt install -y --no-install-recommends ca-certificates curl gcc g++ g++-mingw-w64-x86-64
-        curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.42.0
-        rustup target add x86_64-pc-windows-gnu
-        export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-gcc CC_x86_64_pc_windows_gnu=x86_64-w64-mingw32-gcc-posix CXX_x86_64_pc_windows_gnu=x86_64-w64-mingw32-g++-posix
-        cargo build --release --target x86_64-pc-windows-gnu
+      # Runs a set of commands using the runners shell
+      - name: Project build
+        run: |
+          sudo apt update && sudo apt install -y --no-install-recommends ca-certificates curl gcc g++ g++-mingw-w64-x86-64
+          curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.42.0
+          rustup target add x86_64-pc-windows-gnu
+          export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-gcc CC_x86_64_pc_windows_gnu=x86_64-w64-mingw32-gcc-posix CXX_x86_64_pc_windows_gnu=x86_64-w64-mingw32-g++-posix
+          cargo test --verbose
+          cargo build --verbose --release --target x86_64-pc-windows-gnu
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: target
+          path: target
