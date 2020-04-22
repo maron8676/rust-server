@@ -28,3 +28,4 @@ jobs:
         sudo apt update && sudo apt install -y --no-install-recommends ca-certificates curl gcc g++ g++-mingw-w64-x86-64
         curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.42.0 -t x86_64-pc-windows-gnu
         export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-gcc CC_x86_64_pc_windows_gnu=x86_64-w64-mingw32-gcc-posix CXX_x86_64_pc_windows_gnu=x86_64-w64-mingw32-g++-posix
+        cargo build --release --target x86_64-pc-windows-gnu
