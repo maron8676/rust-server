@@ -25,4 +25,4 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Project build
       run: |
-        apt update && apt install -y --no-install-recommends ca-certificates curl gcc g++ g++-mingw-w64-x86-64
+        sudo apt update && sudo apt install -y --no-install-recommends ca-certificates curl gcc g++ g++-mingw-w64-x86-64
