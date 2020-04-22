@@ -29,7 +29,6 @@ jobs:
           curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain 1.42.0
           rustup target add x86_64-pc-windows-gnu
           export CARGO_TARGET_X86_64_PC_WINDOWS_GNU_LINKER=x86_64-w64-mingw32-gcc CC_x86_64_pc_windows_gnu=x86_64-w64-mingw32-gcc-posix CXX_x86_64_pc_windows_gnu=x86_64-w64-mingw32-g++-posix
-          cargo test --verbose
           cargo build --verbose --release --target x86_64-pc-windows-gnu
       - name: Archive production artifacts
         uses: actions/upload-artifact@v1
